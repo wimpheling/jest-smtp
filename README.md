@@ -1,6 +1,6 @@
 # 📩 jest-smtp
 
-This `jest` extension module provides an ad-hoc SMTP server, as well as custom jest matchers, in order to test email sendings. This is meant to use in end-to-end webserver tools.
+This `jest` extension module provides an ad-hoc SMTP server, as well as custom jest matchers, in order to test email sendings. This is meant to use in end-to-end webserver tests.
 
 It leverages Nodemailer's [`smtp-server`](https://nodemailer.com/extras/smtp-server/) and [`mailparser`](https://nodemailer.com/extras/mailparser/) modules.
 
