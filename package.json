@@ -2,7 +2,7 @@
   "name": "jest-smtp",
   "version": "0.0.1",
   "description": "Jest utilities for testing email sends",
-  "main": "dist/main.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc"
   },

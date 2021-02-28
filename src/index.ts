@@ -1,21 +1,25 @@
 import { ParsedMail } from "mailparser";
 import { JestSMTPServer } from "./JestSMTPServer";
 
-export { createJestSMTPServer } from "./JestSMTPServer";
+export {
+  createJestSMTPServer,
+  JestSMTPServer,
+  JestSMTPConfig,
+} from "./JestSMTPServer";
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace jest {
     interface Matchers<R> {
-      toHaveReceivedMails(num: number): R;
-      toHaveReceivedMailMatching(email: Partial<ParsedMail>): R;
+      toHaveReceivedEmails(num: number): R;
+      toHaveReceivedEmailMatching(email: Partial<ParsedMail>): R;
     }
   }
 }
 
 expect.extend({
-  toHaveReceivedMails(received: JestSMTPServer, num: number) {
-    if (received.mails.length === num) {
+  toHaveReceivedEmails(received: JestSMTPServer, num: number) {
+    if (received.emails.length === num) {
       return {
         message: () => `expected the server not to have received ${num} emails`,
         pass: true,
@@ -27,11 +31,11 @@ expect.extend({
       pass: false,
     };
   },
-  toHaveReceivedMailMatching(
+  toHaveReceivedEmailMatching(
     received: JestSMTPServer,
     email: Partial<ParsedMail>
   ) {
-    const matchingMail = received.mails.find((m) => {
+    const matchingMail = received.emails.find((m) => {
       let isDifferent = false;
       for (const [key, value] of Object.keys(email)) {
         if (m[key as keyof ParsedMail] !== value) {

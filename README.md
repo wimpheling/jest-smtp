@@ -50,6 +50,16 @@ beforeEach(() => {
 })
 ```
 
+If you use typescript you should ask in your `jest.d.ts` file:
+```typescript
+
+declare namespace NodeJS {
+  export interface Global {
+    smtp: import('jest-smtp').JestSMTPServer;
+  }
+}
+```
+
 ## In a test
 
 ```javascript
@@ -74,15 +84,15 @@ describe('test my server', () => {
 
 `jest-smtp` provides custom matchers
 
-### toHaveReceivedMails
+### toHaveReceivedEmails
 
 This tests the number of mails received by the server.
 
 ```javascript
-expect(smtpServer).toHaveReceivedMails(1);
+expect(smtpServer).toHaveReceivedEmails(1);
 ```
 
-### toHaveReceivedMailMatching
+### toHaveReceivedEmailMatching
 
 This tests if an email matching the provided fields was sent. This is useful so you don't have to provide an exact match but only test the relevant fields.
 
@@ -91,7 +101,7 @@ The fields are structured by `mailparser`, you can find the reference here: http
 Be especially aware that the `to`, `from`, `cc` etc... fields are structured as objects, not strings.
 
 ```javascript
-expect(smtpServer).toHaveReceivedMailMatching({
+expect(smtpServer).toHaveReceivedEmailMatching({
     subject: 'My e-mail subject',
     from: {
         name: 'Don\'t reply',
@@ -105,7 +115,7 @@ expect(smtpServer).toHaveReceivedMailMatching({
 `jest-smtp` only exports one function : 
 
 ```javascript
-const { mails, server, close, resetMails } = createJestSMTPServer({
+const { emails, server, close, resetMails } = createJestSMTPServer({
     port: 465,
     host: undefined,
     options: ()
@@ -132,7 +142,7 @@ The default options provided are :
 
 ### returned objects
 
-- `resetMails`
+- `resetEmails`
 
 convenience method to reset the list of received emails between the tests.
 
@@ -140,9 +150,9 @@ convenience method to reset the list of received emails between the tests.
 
 shortcut to `server.close` method. This must be called after all tests or jest will timeout.
 
-- `mails`
+- `emails`
 
-The list of `ParsedMail` objects received. You can access it to do extra tests on the content of the mails.
+The list of `ParsedMail` objects received. You can access it to do extra tests on the content of the emails.
 
 - `server`
 

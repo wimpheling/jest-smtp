@@ -8,9 +8,9 @@ export type JestSMTPConfig = {
 };
 
 export type JestSMTPServer = {
-  mails: ParsedMail[];
+  emails: ParsedMail[];
   server: SMTPServer;
-  resetMails: () => void;
+  resetEmails: () => void;
   close: () => void;
 };
 
@@ -20,16 +20,16 @@ const defaultConfig = {
 };
 
 export const createJestSMTPServer = (
-  config: JestSMTPConfig
+  config?: JestSMTPConfig
 ): JestSMTPServer => {
-  const mails: ParsedMail[] = [];
+  const emails: ParsedMail[] = [];
   const server = new SMTPServer({
     ...defaultConfig,
-    ...(config.config || {}),
+    ...(config?.config || {}),
     onData(stream, session, callback) {
       simpleParser(stream, {})
         .then((newMail) => {
-          mails.push(newMail);
+          emails.push(newMail);
           callback();
         })
         .catch((err) => {
@@ -38,14 +38,14 @@ export const createJestSMTPServer = (
     },
   });
 
-  const resetMails = () => {
-    mails.splice(0, mails.length);
+  const resetEmails = () => {
+    emails.splice(0, emails.length);
   };
 
   const close = () => {
     server.close();
   };
 
-  server.listen(config.port || 465, config.host);
-  return { server, mails, resetMails, close };
+  server.listen(config?.port || 465, config?.host);
+  return { server, emails, resetEmails, close };
 };
