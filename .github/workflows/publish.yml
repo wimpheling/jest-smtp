@@ -10,6 +10,8 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
+    - name: install
+      run: npm ci
     - name: build
       run: npm run build  
     - name: Publish if version has been updated
