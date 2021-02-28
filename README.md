@@ -50,12 +50,13 @@ beforeEach(() => {
 })
 ```
 
-If you use typescript you should ask in your `jest.d.ts` file:
+If you use typescript you should add this declaration in your `jest.d.ts` file:
+
 ```typescript
 
 declare namespace NodeJS {
   export interface Global {
-    smtp: import('jest-smtp').JestSMTPServer;
+    smtpServer: import('jest-smtp').JestSMTPServer;
   }
 }
 ```
