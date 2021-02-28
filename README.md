@@ -104,7 +104,7 @@ expect(smtpServer).toHaveReceivedMailMatching({
 
 `jest-smtp` only exports one function : 
 
-```
+```javascript
 const { mails, server, close, resetMails } = createJestSMTPServer({
     port: 465,
     host: undefined,
