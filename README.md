@@ -39,15 +39,15 @@ import { createJestSMTPServer } from 'jest-smtp';
 
 beforeAll(() => {
     global.smtpServer = createJestSMTPServer();
-})
+});
 
 afterAll(() => {
     global.smtpServer.close();
-})
+});
 
 beforeEach(() => {
     global.smtpServer.resetMails();
-})
+});
 ```
 
 If you use typescript you should add this declaration in your `jest.d.ts` file:
@@ -71,11 +71,11 @@ describe('test my server', () => {
 
     afterAll(() => {
         smtpServer.close();
-    })
+    });
 
     beforeEach(() => {
         smtpServer.resetMails();
-    })
+    });
 })
 ```
 
